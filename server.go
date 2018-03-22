@@ -25,22 +25,22 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	if r.URL.Path[1:] == "" {
 		//sending text when url in address bar is like site.com/
-		fmt.Fprintf(w, "Enter key and value in form: sitename.com/key:value/. \nA key must compile 1-10 integers, a value must compile 1-15 strings. \nIf a pair key:value is already exis, you can get the value by key, enter sitename.com/key:/")
+		fmt.Fprintf(w, "Enter key and value in form: sitename.com/key:value/. \nA key must contain 1-10 integers, a value must contain 1-15 strings. \nIf a pair key:value is already exis, you can get the value by key, enter sitename.com/key:/")
 
 	} else if validKV.FindString(r.URL.Path) != "" { //if key and value are both correct
 		for i, v := range data { //ranging data with already exesting pairs
 			if v.Key == key { //if match is present
 				data[i].Value = reValue.FindString(r.URL.Path)           //rewriting value to existing key
-				fmt.Fprintf(w, "The value for key %s was rewrited", key) //text after rewriting
+				fmt.Fprintf(w, "The value for key %s was rewrited", key)
 			}
 		}
 		data = append(data, KV{key, reValue.FindString(r.URL.Path)}) //adding pair to data
-		fmt.Fprintf(w, "The pair was added")                         //text after addind
+		fmt.Fprintf(w, "The pair was added")                       
 
 	} else if reKey.FindString(r.URL.Path) != "" { //if path include only key like /ints:
 		for _, v := range data { //ranging data with already exesting pairs
 			if v.Key == key { //if match is present
-				fmt.Fprintf(w, "The value for key %s is %s", key, v.Value) //text with value
+				fmt.Fprintf(w, "The value for key %s is %s", key, v.Value)
 			}
 		}
 		fmt.Fprintf(w, "There's no value for this key") //text if value isnt present
