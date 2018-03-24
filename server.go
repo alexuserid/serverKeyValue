@@ -8,8 +8,7 @@ import (
 )
 
 type KV struct {
-	Key   string
-	Value string
+	Key, Value string
 }
 
 var (
